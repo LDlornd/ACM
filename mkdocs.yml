@@ -1,0 +1,44 @@
+site_name: As You Like 的 ACM 模板
+site_author: As You Like
+
+nav:
+    - 简介:
+        - 首页: index.md
+    - 数学:
+        - FFT: math/FFT.md
+
+theme:
+    name: "material"
+    language: 'zh'
+    features:
+        - navigation.top
+        - navigation.tabs
+    palette:
+        primary: 'Light Blue'
+        accent: 'red'
+    include_search_page: false
+    search_index_only: true
+    font:
+        text: 'Fira Sans'
+        code: 'Fira Mono'
+
+markdown_extensions:
+    - meta
+    - admonition
+    - attr_list
+    - pymdownx.highlight: 
+        linenums: true
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.arithmatex:
+        generic: true
+  
+
+extra_javascript:
+    - '_static/js/extra.js?v=16'
+    - https://polyfill.io/v3/polyfill.min.js?features=es6
+    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+    - '_static/css/extra.css?v=13'
+  
