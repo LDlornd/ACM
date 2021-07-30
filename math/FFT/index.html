@@ -1,0 +1,767 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="As You Like">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.1">
+    
+    
+      
+        <title>FFT - As You Like 的 ACM 模板</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1118c9be.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ba0d045b.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#02a6f2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,700%7CFira+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Fira Sans";--md-code-font-family:"Fira Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../_static/css/extra.css?v=13">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="light-blue" data-md-color-accent="red">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fft" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="As You Like 的 ACM 模板" class="md-header__button md-logo" aria-label="As You Like 的 ACM 模板" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            As You Like 的 ACM 模板
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              FFT
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        简介
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        数学
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="As You Like 的 ACM 模板" class="md-nav__button md-logo" aria-label="As You Like 的 ACM 模板" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    As You Like 的 ACM 模板
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        简介
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        数学
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="数学" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          数学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          FFT
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        FFT
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fft" class="md-nav__link">
+    递归 FFT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fft_1" class="md-nav__link">
+    非递归 FFT（蝴蝶优化）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fft_2" class="md-nav__link">
+    FFT 与字符串匹配
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fft" class="md-nav__link">
+    递归 FFT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fft_1" class="md-nav__link">
+    非递归 FFT（蝴蝶优化）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fft_2" class="md-nav__link">
+    FFT 与字符串匹配
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>FFT</h1>
+                
+                <h4 id="fft">递归 FFT</h4>
+<p>给定两个多项式，快速相乘。先做一遍 FFT 把给定的多项式从系数表示形式转为点值表示形式，再用  的时间将点值相乘，得到结果多项式的点值表示形式。对结果多项式做一遍逆 FFT 即可得到其系数表示形式。</p>
+<p>由于单位根具有的特殊的性质，FFT 可以通过分治在 <span class="arithmatex">\(\Theta(n\log n)\)</span> 的时间内完成。</p>
+<details class="note"><summary>递归 FFT</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;complex&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">comp</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="mf">-1.0</span><span class="p">);</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">MAXN</span> <span class="o">=</span> <span class="mf">1e6</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
+<span class="n">comp</span> <span class="n">F</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">],</span> <span class="n">G</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="kt">void</span> <span class="nf">FFT</span><span class="p">(</span><span class="kt">int</span> <span class="n">lmt</span><span class="p">,</span> <span class="n">comp</span> <span class="n">arr</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">opt</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">lmt</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="n">comp</span> <span class="n">odd</span><span class="p">[</span><span class="n">lmt</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">],</span> <span class="n">eve</span><span class="p">[</span><span class="n">lmt</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lmt</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">eve</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">odd</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">odd</span><span class="p">,</span> <span class="n">opt</span><span class="p">);</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">eve</span><span class="p">,</span> <span class="n">opt</span><span class="p">);</span>
+    <span class="n">comp</span> <span class="n">cur</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">step</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">lmt</span><span class="p">),</span> <span class="n">opt</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">lmt</span><span class="p">));</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lmt</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">,</span> <span class="n">cur</span> <span class="o">*=</span> <span class="n">step</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">eve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">cur</span> <span class="o">*</span> <span class="n">odd</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">lmt</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">eve</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">cur</span> <span class="o">*</span> <span class="n">odd</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+        <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">lmt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">lmt</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lmt</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">lmt</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%.0lf &quot;</span><span class="p">,</span> <span class="n">fabs</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">()</span> <span class="o">/</span> <span class="n">lmt</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="fft_1">非递归 FFT（蝴蝶优化）</h4>
+<p>观察递归 FFT 的过程，每次都是将多项式的奇数次项和偶数次项系数分开，一直到只剩下一个数，我们来模拟一下拆分与合并的过程。假设多项式次数为 <span class="arithmatex">\(8\)</span> 。</p>
+<table align="center">
+    <tr>
+        <td colspan="8" align="center">0,1,2,3,4,5,6,7</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center">0,2,4,6</td>
+        <td colspan="4" align="center">1,3,5,7</td>
+    </tr>
+        <td colspan="2" align="center">0,4</td>
+        <td colspan="2" align="center">2,6</td>
+        <td colspan="2" align="center">1,5</td>
+        <td colspan="2" align="center">3,7</td>
+    <tr>
+    </tr>
+    <tr>
+        <td align="center">0</td>
+        <td align="center">4</td>
+        <td align="center">2</td>
+        <td align="center">6</td>
+        <td align="center">1</td>
+        <td align="center">5</td>
+        <td align="center">3</td>
+        <td align="center">7</td>
+    </tr>
+</table>
+
+<p>可以发现规律：原序列的每个元素的下标用二进制表示，将二进制为翻转之后，得到的数就是拆分到最后所在的位置。如上图中 <span class="arithmatex">\(1\)</span> 是 <code>001</code> ，<span class="arithmatex">\(4\)</span> 是 <code>100</code> ，二进制恰好翻转，而在原序列与最终序列中，<span class="arithmatex">\(1\)</span> 和 <span class="arithmatex">\(4\)</span> 的位置恰好互换。于是考虑如何求出下标 <span class="arithmatex">\(i\)</span> 对应的互换位置 <code>rev[i]</code> 。
+如果我们要将 <span class="arithmatex">\(i\)</span> 的二进制位翻转，我们可以将其拆成两部分，最后一位和剩下的所有位（称之为剩余位）。先将剩余位翻转，然后将最后一位放在翻转后的剩余位的前面，剩余位翻转的结果为：<code>rev[i &gt;&gt; 1] &gt;&gt; 1</code> ，再看情况在翻转后的剩余位之前加 <span class="arithmatex">\(1\)</span> 即可。</p>
+<details class="note"><summary>非递归 FFT</summary><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;complex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">comp</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="mf">-1.0</span><span class="p">);</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">MAXN</span> <span class="o">=</span> <span class="mf">1e6</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">rev</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">];</span>
+<span class="n">comp</span> <span class="n">F</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">],</span> <span class="n">G</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">];</span>
+
+<span class="kt">void</span> <span class="nf">FFT</span><span class="p">(</span><span class="kt">int</span> <span class="n">lmt</span><span class="p">,</span> <span class="n">comp</span> <span class="n">arr</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">opt</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lmt</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">swap</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">arr</span><span class="p">[</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]]);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">len</span>  <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">len</span> <span class="o">&lt;=</span> <span class="n">lmt</span><span class="p">;</span> <span class="n">len</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">comp</span> <span class="n">step</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">len</span><span class="p">),</span> <span class="n">opt</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="n">len</span><span class="p">));</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="n">lmt</span><span class="p">;</span> <span class="n">w</span> <span class="o">+=</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">comp</span> <span class="n">cur</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">w</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">comp</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="n">comp</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">*</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="p">];</span>
+                <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="n">t2</span><span class="p">;</span>
+                <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t2</span><span class="p">;</span>
+                <span class="n">cur</span> <span class="o">*=</span> <span class="n">step</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">opt</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lmt</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">()</span> <span class="o">/</span> <span class="n">lmt</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">k</span><span class="p">);</span>
+        <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">lmt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">lmt</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">lmt</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lmt</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">rev</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rev</span><span class="p">[</span><span class="n">i</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">lmt</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">lmt</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">FFT</span><span class="p">(</span><span class="n">lmt</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%.0lf &quot;</span><span class="p">,</span> <span class="n">fabs</span><span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">real</span><span class="p">()));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</details>
+<h4 id="fft_2">FFT 与字符串匹配</h4>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="上一页: 首页" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              首页
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.tabs"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.53c85856.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.716f8af4.min.js"></script>
+      
+        <script src="../../_static/js/extra.js?v=16"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
