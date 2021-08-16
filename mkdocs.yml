@@ -6,6 +6,8 @@ nav:
         - 首页: index.md
     - 数学:
         - FFT: math/FFT.md
+    - 字符串:
+        - Trie 树: string/trie.md
 
 theme:
     name: "material"
