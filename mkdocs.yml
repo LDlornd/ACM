@@ -8,6 +8,8 @@ nav:
         - FFT: math/FFT.md
     - 字符串:
         - Trie 树: string/trie.md
+    - 数据结构:
+        - 树状数组: data_structure/BIT.md
 
 theme:
     name: "material"
