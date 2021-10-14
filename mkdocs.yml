@@ -10,6 +10,9 @@ nav:
         - Trie 树: string/trie.md
     - 数据结构:
         - 树状数组: data_structure/BIT.md
+    
+    - 图论:
+        - 树上启发式合并: graph/dsu_on_tree.md
 
 theme:
     name: "material"
